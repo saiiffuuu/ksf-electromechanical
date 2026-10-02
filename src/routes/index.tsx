@@ -7,6 +7,20 @@ import plantroom from "@/assets/ksf-plantroom.jpg";
 import pipingImage from "@/assets/ksf-piping.jpg";
 import electricalImage from "@/assets/ksf-electrical.jpg";
 
+const companyLogos = [
+  { name: "Emaar Properties", src: "/company-logos/emaar.png" },
+  { name: "Meraas", src: "/company-logos/meraas.png" },
+  { name: "Dubai Holding", src: "/company-logos/dubai-holding.png"},
+  { name: "Binghatti Developers", src: "/company-logos/binghatti.svg", darken: true },
+  { name: "Omniyat", src: "/company-logos/omniyat.png" },
+  { name: "Azizi Developments", src: "/company-logos/azizi.png" },
+  { name: "Nakheel", src: "/company-logos/nakheel.png" },
+  { name: "DAMAC Properties", src: "/company-logos/damac.png" },
+  { name: "Sobha Realty", src: "/company-logos/sobha.svg", darken: true },
+  { name: "Al Habtoor Group", src: "/company-logos/al-habtoor.png" },
+  { name: "Dutco Construction", src: "/company-logos/dutco.jpg" },
+];
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -37,6 +51,27 @@ function HomePage() {
           <div className="hero__image-wrap">
             <img className="hero__image" src={plantroom} alt="Commercial building plant room with HVAC equipment and ductwork" width={1024} height={1280} fetchPriority="high" />
             <span className="hero__image-note">Building systems · Dubai, UAE</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="client-logo-carousel" aria-label="Client company logos">
+        <h2 className="client-logo-carousel__heading">Trusted by Leading Developers &amp; Contractors</h2>
+        <div className="client-logo-carousel__viewport">
+          <div className="client-logo-carousel__track">
+            {[0, 1].map((copy) => (
+              <div className="client-logo-carousel__group" aria-hidden={copy === 1} key={copy}>
+                {companyLogos.map((company) => (
+                  <div className="client-logo-carousel__item" key={company.name}>
+                    <img
+                      className={company.darken ? "client-logo-carousel__image--darken" : undefined}
+                      src={company.src}
+                      alt={copy === 0 ? company.name : ""}
+                    />
+                  </div>
+                ))}
+              </div>
+            ))}
           </div>
         </div>
       </section>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { MessageCircle, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { PageFrame, PageIntro, phoneLink, whatsappLink } from "@/components/site";
+import { contactEmail, PageFrame, PageIntro, phoneLink, whatsappLink } from "@/components/site";
 import { services } from "@/lib/site-content";
 
 export const Route = createFileRoute("/contact")({
@@ -23,8 +23,24 @@ function ContactPage() {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!event.currentTarget.reportValidity()) return;
+
+    const formData = new FormData(event.currentTarget);
+    const getField = (name: string) => String(formData.get(name) ?? "") || "Not provided";
+    const body = [
+      `Name: ${getField("name")}`,
+      `Company: ${getField("company")}`,
+      `Email: ${getField("email")}`,
+      `Phone: ${getField("phone")}`,
+      `Service required: ${getField("service")}`,
+      "",
+      "Project details:",
+      getField("details"),
+    ].join("\n");
+    const subject = encodeURIComponent(`Website enquiry from ${getField("name")}`);
+    const encodedBody = encodeURIComponent(body);
+
+    window.location.href = `mailto:${contactEmail}?subject=${subject}&body=${encodedBody}`;
     setSubmitted(true);
-    event.currentTarget.reset();
   }
 
   return (
@@ -33,7 +49,10 @@ function ContactPage() {
       <section className="content-section page-width contact-grid">
         <div className="contact-info">
           <div className="contact-info__item"><p className="contact-info__label">Phone</p><a href={phoneLink}>+971 50 2228678</a></div>
-          <div className="contact-info__item"><p className="contact-info__label">Email</p><a href="mailto:baharuddinksf@gmail.com">baharuddinksf@gmail.com</a></div>
+          <div className="contact-info__item">
+            <p className="contact-info__label">Email</p>
+            <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+          </div>
           <div className="contact-info__item"><p className="contact-info__label">Address</p><address>P.O. Box 377147<br />Dubai, United Arab Emirates</address></div>
           <div className="contact-info__item"><p className="contact-info__label">WhatsApp</p><a href={whatsappLink} target="_blank" rel="noreferrer">Available · Chat with KSF</a></div>
           <div className="contact-info__actions">
@@ -50,7 +69,13 @@ function ContactPage() {
           <div className="contact-form__field contact-form__field--wide"><label htmlFor="service">Service Required</label><select id="service" name="service" defaultValue=""><option value="" disabled>Select a service</option>{services.map((service) => <option key={service.title}>{service.title}</option>)}</select></div>
           <div className="contact-form__field contact-form__field--wide"><label htmlFor="details">Project Details</label><textarea id="details" name="details" required /></div>
           <Button type="submit" variant="brand" size="lg">Send Enquiry</Button>
-          {submitted && <p className="form-notice" role="status">Thank you for your enquiry. The form is ready for an email connection; please contact KSF directly by phone, email or WhatsApp for now.</p>}
+          {submitted && (
+            <p className="form-notice" role="status">
+              Your email app should open with your enquiry addressed to {contactEmail}.
+              Review it and press Send to complete delivery. If it does not open, email
+              us directly at {contactEmail}.
+            </p>
+          )}
         </form>
       </section>
     </PageFrame>

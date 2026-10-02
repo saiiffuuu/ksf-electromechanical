@@ -3,9 +3,10 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { ArrowRight, ArrowUpRight, Menu, MessageCircle, Phone, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export const phoneLink = "tel:+97150222678";
+export const phoneLink = "tel:+971 50 222 8678";
+export const contactEmail = "baharuddinksf@gmail.com";
 export const whatsappLink =
-  "https://wa.me/97150222678?text=Hello%20KSF%20Electromechanical%20Works%2C%20I%20would%20like%20to%20enquire%20about%20your%20services.";
+  "https://wa.me/+971502228678?text=Hello%20KSF%20Electromechanical%20Works%2C%20I%20would%20like%20to%20enquire%20about%20your%20services.";
 
 const navItems = [
   { label: "Home", to: "/" as const },
@@ -110,7 +111,7 @@ export function SiteFooter() {
         <div className="site-footer__contact">
           <p className="footer-label">Get in touch</p>
           <a href={phoneLink}>+971 50 2228678</a>
-          <a href="mailto:baharuddinksf@gmail.com">baharuddinksf@gmail.com</a>
+          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
           <p>P.O. Box 377147, Dubai, U.A.E.</p>
           <a className="footer-whatsapp" href={whatsappLink} target="_blank" rel="noreferrer">Chat on WhatsApp <ArrowUpRight aria-hidden="true" /></a>
         </div>

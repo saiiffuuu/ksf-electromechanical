@@ -203,6 +203,16 @@ html { scroll-behavior: smooth; }
 .hero__image-wrap { position: relative; min-width: 0; }
 .hero__image { width: 100%; height: auto; aspect-ratio: 4 / 5; border-radius: .55rem; object-fit: cover; }
 .hero__image-note { position: absolute; right: .85rem; bottom: .85rem; padding: .65rem .8rem; background: var(--background); font-size: .68rem; }
+.client-logo-carousel { overflow: hidden; padding-block: 1.7rem; border-block: 1px solid var(--border); }
+.client-logo-carousel__heading { margin: 0 1rem 1.25rem; color: var(--foreground); font: 700 clamp(1.1rem, 2vw, 1.5rem)/1.2 var(--font-display); letter-spacing: 0; text-align: center; text-wrap: balance; }
+.client-logo-carousel__viewport { overflow: hidden; --client-logo-edge-fade: clamp(1rem, 6vw, 4rem); mask-image: linear-gradient(to right, transparent, black var(--client-logo-edge-fade), black calc(100% - var(--client-logo-edge-fade)), transparent); -webkit-mask-image: linear-gradient(to right, transparent, black var(--client-logo-edge-fade), black calc(100% - var(--client-logo-edge-fade)), transparent); }
+.client-logo-carousel__track { display: flex; width: max-content; animation: client-logo-scroll 55s linear infinite; }
+.client-logo-carousel__track:hover { animation-play-state: paused; }
+.client-logo-carousel__group { display: flex; flex: 0 0 auto; align-items: center; gap: clamp(2rem, 4vw, 3.5rem); padding-inline: clamp(1rem, 2vw, 1.75rem); }
+.client-logo-carousel__item { position: relative; display: grid; flex: 0 0 auto; width: clamp(8rem, 13vw, 11rem); height: 4.5rem; place-items: center; }
+.client-logo-carousel__item img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; }
+.client-logo-carousel__image--darken { filter: brightness(0); }
+@keyframes client-logo-scroll { to { transform: translateX(-50%); } }
 .trust-strip { border-block: 1px solid var(--border); }
 .trust-strip__grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); }
 .trust-strip__item { min-width: 0; padding: 1.5rem 1.2rem; border-left: 1px solid var(--border); }
@@ -411,4 +421,6 @@ html { scroll-behavior: smooth; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .client-logo-carousel__viewport { overflow-x: auto; }
+  .client-logo-carousel__track { animation: none !important; }
 }
